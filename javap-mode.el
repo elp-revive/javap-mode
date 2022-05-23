@@ -72,7 +72,7 @@
 (defvar javap-mode-syntax-table′ (make-syntax-table)
   "Syntax table for use in javap-mode.")
 
- ;;;###autoload
+;;;###autoload
 (define-derived-mode javap-mode fundamental-mode "javap"
   "A major mode for viewing javap files."
   :syntax-table javap-mode-syntax-table′
@@ -83,19 +83,20 @@
   (set (make-local-variable 'comment-start-skip) "#")
   (set (make-local-variable 'font-lock-defaults) '(javap-font-lock-keywords)))
 
+;;;###autoload
 (defun javap-buffer ()
   "run javap on contents of buffer"
   (interactive)
-  (lexical-let* ((b-name (file-name-nondirectory (buffer-file-name)))
-                 (b-name (substring b-name 0 (- (length b-name) 6)))
-                 (new-b-name (concat "*javap " b-name ".class" "*"))
-                 (new-buf (get-buffer new-b-name))
-                 (old-buf (buffer-name))
-                 (done (lambda (&rest args)
-                         (interactive)
-                         (progn
-                           (kill-buffer (current-buffer))
-                           (kill-buffer old-buf)))))
+  (let* ((b-name (file-name-nondirectory (buffer-file-name)))
+         (b-name (substring b-name 0 (- (length b-name) 6)))
+         (new-b-name (concat "*javap " b-name ".class" "*"))
+         (new-buf (get-buffer new-b-name))
+         (old-buf (buffer-name))
+         (done (lambda (&rest args)
+                 (interactive)
+                 (progn
+                   (kill-buffer (current-buffer))
+                   (kill-buffer old-buf)))))
     (progn
       (if new-buf
           (switch-to-buffer new-buf)
@@ -109,11 +110,11 @@
       (javap-mode)
       (local-set-key [(q)] done))))
 
+;;;###autoload
 (add-hook 'find-file-hook
           (lambda (&rest args)
-            (if (string= ".class" (substring (buffer-file-name) -6 nil))
-                (javap-buffer))))
+            (when (string= ".class" (substring (buffer-file-name) -6 nil))
+              (javap-buffer))))
 
 (provide 'javap-mode)
-
 ;;; javap-mode.el ends here
