@@ -1,8 +1,9 @@
 ;;; javap-mode.el --- Javap major mode
 ;;; Version: 9
-;;; URL: http://github.com/hiredman/javap-mode
+;;; URL: http://github.com/elp-revive/javap-mode
 
 ;; Copyright (C) 2011 Kevin Downey
+;; Copyright (C) 2022 Jen-Chieh Shen
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
 ;; of this software and associated documentation files (the "Software"), to deal
