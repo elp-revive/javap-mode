@@ -1,3 +1,5 @@
+;; -*- mode: eask; lexical-binding: t -*-
+
 (package "javap-mode"
          "9"
          "Javap major mode")
